@@ -9,6 +9,16 @@ html {
   min-height: 100%;
 }
 
+
+img{
+  margin-left:auto;
+  margin-top:0;
+  height:400px;
+  width:100%;
+}
+
+
+
 body {
   /* Padding bottom by footer height */
   padding-bottom: 80px;

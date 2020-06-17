@@ -40,7 +40,7 @@ function makeResponsive() {
   }
 
 // SVG wrapper dimensions are determined by the current width and height of the browser window.
-var svgWidth = window.innerWidth*0.8;
+var svgWidth = window.innerWidth*0.7;
 var svgHeight =svgWidth*0.65;
 
 //set margin
@@ -48,7 +48,7 @@ var margin = {
 top: 20,
 bottom: 100,
 right: 40,
-left: 80
+left: 320
 };
 
 //set svg height and width
@@ -430,14 +430,14 @@ d3.select(window).on("resize",makeResponsive);
 
 
 
-var svgWidth = 960;
-var svgHeight = 500;
+var svgWidth = window.innerWidth*0.7;
+var svgHeight =svgWidth*0.65;
 
 var margin = {
   top: 20,
   right: 40,
   bottom: 60,
-  left: 100
+  left: 320
 };
 
 var width = svgWidth - margin.left - margin.right;
@@ -464,7 +464,7 @@ d3.csv("AlcoholAbuse.csv").then(function(AlcoholAbuse) {
   // Step 2: Create scale functions
   // ==============================
   var xLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(AlcoholAbuse, d => d.Alcohol_Consumption)])
+    .domain([d3.min(AlcoholAbuse, d => d.Alcohol_Consumption)-0.5, d3.max(AlcoholAbuse, d => d.Alcohol_Consumption)])
     .range([0, width]);
 
   var yLinearScale = d3.scaleLinear()
@@ -523,7 +523,7 @@ d3.csv("AlcoholAbuse.csv").then(function(AlcoholAbuse) {
   // Create axes labels
   chartGroup.append("text")
     .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left + 40)
+    .attr("y", 0 - margin.left + 250)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
     .attr("class", "axisText")
@@ -828,72 +828,72 @@ region2=["World", "Australia_and_New_Zealand", "North_America", "Western_Europe"
 //        console.log(key,value);
         if (id=="World"){
           demographicinfo.append("h7").text(value);
-          demographicinfo.append("h7").text(" Average Happiness Score: "+worldh);
+          demographicinfo.append("h7").text(" Average Happiness Score: "+worldh.toFixed(2));
           demographicinfo.append("h5").text("                    ");
-          demographicinfo.append("h7").text("Average Alcohol Per Capita: "+worldal);
+          demographicinfo.append("h7").text("Average Alcohol Per Capita: "+worldal.toFixed(2));
         }
 
         else if (id=="Western_Europe"){
           demographicinfo.append("h5").text(value);
-          demographicinfo.append("h7").text(" Average Happiness Score: "+h1f);
+          demographicinfo.append("h7").text(" Average Happiness Score: "+h1f.toFixed(2));
           demographicinfo.append("h5").text("                    ");
-          demographicinfo.append("h7").text("Average Alcohol Per Capita: "+al1f);
+          demographicinfo.append("h7").text("Average Alcohol Per Capita: "+al1f.toFixed(2));
         }
 
         else if (id=="North_America"){
           demographicinfo.append("h5").text(value);
-          demographicinfo.append("h7").text(" Total Happiness Score: "+h2f);
+          demographicinfo.append("h7").text(" Total Happiness Score: "+h2f.toFixed(2));
           demographicinfo.append("h5").text("                    ");
-          demographicinfo.append("h7").text("Total Alcohol Per Capita: "+al2f);
+          demographicinfo.append("h7").text("Total Alcohol Per Capita: "+al2f.toFixed(2));
         }
 
         else if (id=="Australia_and_New_Zealand"){
           demographicinfo.append("h5").text(value);
-          demographicinfo.append("h7").text(" Total Happiness Score: "+h3f);
+          demographicinfo.append("h7").text(" Total Happiness Score: "+h3f.toFixed(2));
           demographicinfo.append("h5").text("                    ");
-          demographicinfo.append("h7").text("Total Alcohol Per Capita: "+al3f);
+          demographicinfo.append("h7").text("Total Alcohol Per Capita: "+al3f.toFixed(2));
         }
 
         else if (id=="Middle_East_and_Northern_Africa"){
           demographicinfo.append("h5").text(value);
-          demographicinfo.append("h7").text(" Total Happiness Score: "+h4f);
+          demographicinfo.append("h7").text(" Total Happiness Score: "+h4f.toFixed(2));
           demographicinfo.append("h5").text("                    ");
-          demographicinfo.append("h7").text("Total Alcohol Per Capita: "+al4f);
+          demographicinfo.append("h7").text("Total Alcohol Per Capita: "+al4f.toFixed(2));
         }
 
         else if (id=="Latin_America_and_Caribbean"){
           demographicinfo.append("h5").text(value);
-          demographicinfo.append("h7").text(" Total Happiness Score: "+h5f);
+          demographicinfo.append("h7").text(" Total Happiness Score: "+h5f.toFixed(2));
           demographicinfo.append("h5").text("                    ");
-          demographicinfo.append("h7").text("Total Alcohol Per Capita: "+al5f);
+          demographicinfo.append("h7").text("Total Alcohol Per Capita: "+al5f.toFixed(2));
         }
 
         else if (id=="Southeastern_Asia"){
           demographicinfo.append("h5").text(value);
-          demographicinfo.append("h7").text(" Total Happiness Score: "+h6f);
+          demographicinfo.append("h7").text(" Total Happiness Score: "+h6f.toFixed(2));
           demographicinfo.append("h5").text("                    ");
-          demographicinfo.append("h7").text("Total Alcohol Per Capita: "+al6f);
+          demographicinfo.append("h7").text("Total Alcohol Per Capita: "+al6f.toFixed(2));
         }
 
         else if (id=="Central_and_Eastern_Europe"){
           demographicinfo.append("h5").text(value);
-          demographicinfo.append("h7").text(" Total Happiness Score: "+h7f);
+          demographicinfo.append("h7").text(" Total Happiness Score: "+h7f.toFixed(2));
           demographicinfo.append("h5").text("                    ");
-          demographicinfo.append("h7").text("Total Alcohol Per Capita: "+al7f);
+          demographicinfo.append("h7").text("Total Alcohol Per Capita: "+al7f.toFixed(2));
         }
 
         else if (id=="Eastern_Asia"){
           demographicinfo.append("h5").text(value);
-          demographicinfo.append("h7").text(" Total Happiness Score: "+h8f);
+          demographicinfo.append("h7").text(" Total Happiness Score: "+h8f.toFixed(2));
           demographicinfo.append("h5").text("                    ");
-          demographicinfo.append("h7").text("Total Alcohol Per Capita: "+al8f);
+          demographicinfo.append("h7").text("Total Alcohol Per Capita: "+al8f.toFixed(2));
         }
 
         else {
           demographicinfo.append("h5").text(value);
-          demographicinfo.append("h7").text(" Total Happiness Score: "+h9f);
+          demographicinfo.append("h7").text(" Total Happiness Score: "+h9f.toFixed(2));
           demographicinfo.append("h5").text("                    ");
-          demographicinfo.append("h7").text("Total Alcohol Per Capita: "+al9f);
+          demographicinfo.append("h7").text("Total Alcohol Per Capita: "+al9f.toFixed(2));
         }
       })
   }
@@ -1279,15 +1279,19 @@ if(id==="World"){
   var chartdata=[trace1];
 
   var layout={
-      title:"hapiness score",
-  
+      title:"Hapiness Score",
+      yaxis:{
+        automargin:true,
+      }
   }
 
   var chartdata2=[trace2];
 
   var layout2={
-      title:"alcohol",
-  
+      title:"Total Alcohol Consumption",
+      yaxis:{
+        automargin:true,
+      }
   }
 
   Plotly.newPlot("bar",chartdata,layout);
@@ -1314,15 +1318,19 @@ else if(id==="Western_Europe"){
   var chartdata=[trace1];
 
   var layout={
-      title:"hapiness score",
-  
+      title:"Hapiness Score",
+      yaxis:{
+        automargin:true,
+      }
   }
 
   var chartdata2=[trace2];
 
   var layout2={
-      title:"alcohol",
-  
+      title:"Total Alcohol Consumption",
+      yaxis:{
+        automargin:true,
+      }
   }
 
   Plotly.newPlot("bar",chartdata,layout);
@@ -1349,15 +1357,19 @@ else if(id==="North_America"){
   var chartdata=[trace1];
 
   var layout={
-      title:"hapiness score",
-  
+      title:"Hapiness Score",
+      yaxis:{
+        automargin:true,
+      }
   }
 
   var chartdata2=[trace2];
 
   var layout2={
-      title:"alcohol",
-  
+      title:"Total Alcohol Consumption",
+      yaxis:{
+        automargin:true,
+      }
   }
 
   Plotly.newPlot("bar",chartdata,layout);
@@ -1384,15 +1396,19 @@ else if(id==="Australia_and_New_Zealand"){
   var chartdata=[trace1];
 
   var layout={
-      title:"hapiness score",
-  
+      title:"Hapiness Score",
+      yaxis:{
+        automargin:true,
+      }
   }
 
   var chartdata2=[trace2];
 
   var layout2={
-      title:"alcohol",
-  
+      title:"Total Alcohol Consumption",
+      yaxis:{
+        automargin:true,
+      }
   }
 
   Plotly.newPlot("bar",chartdata,layout);
@@ -1419,15 +1435,19 @@ else if(id==="Middle_East_and_Northern_Africa"){
   var chartdata=[trace1];
 
   var layout={
-      title:"hapiness score",
-  
+      title:"Hapiness Score",
+      yaxis:{
+        automargin:true,
+      }
   }
 
   var chartdata2=[trace2];
 
   var layout2={
-      title:"alcohol",
-  
+      title:"Total Alcohol Consumption",
+      yaxis:{
+        automargin:true,
+      }
   }
 
   Plotly.newPlot("bar",chartdata,layout);
@@ -1454,15 +1474,19 @@ else if(id==="Latin_America_and_Caribbean"){
   var chartdata=[trace1];
 
   var layout={
-      title:"hapiness score",
-  
+      title:"Hapiness Score",
+      yaxis:{
+        automargin:true,
+      }
   }
 
   var chartdata2=[trace2];
 
   var layout2={
-      title:"alcohol",
-  
+      title:"Total Alcohol Consumption",
+      yaxis:{
+        automargin:true,
+      }
   }
 
   Plotly.newPlot("bar",chartdata,layout);
@@ -1489,15 +1513,19 @@ else if(id==="Southeastern_Asia"){
   var chartdata=[trace1];
 
   var layout={
-      title:"hapiness score",
-  
+      title:"Hapiness Score",
+      yaxis:{
+        automargin:true,
+      }
   }
 
   var chartdata2=[trace2];
 
   var layout2={
-      title:"alcohol",
-  
+      title:"Total Alcohol Consumption",
+      yaxis:{
+        automargin:true,
+      }
   }
 
   Plotly.newPlot("bar",chartdata,layout);
@@ -1524,15 +1552,19 @@ else if(id==="Central_and_Eastern_Europe"){
   var chartdata=[trace1];
 
   var layout={
-      title:"hapiness score",
-  
+      title:"Hapiness Score",
+      yaxis:{
+        automargin:true,
+      }
   }
 
   var chartdata2=[trace2];
 
   var layout2={
-      title:"alcohol",
-  
+      title:"Total Alcohol Consumption",
+      yaxis:{
+        automargin:true,
+      }
   }
 
   Plotly.newPlot("bar",chartdata,layout);
@@ -1559,15 +1591,19 @@ else if(id==="Eastern_Asia"){
   var chartdata=[trace1];
 
   var layout={
-      title:"hapiness score",
-  
+      title:"Hapiness Score",
+      yaxis:{
+        automargin:true,
+      }
   }
 
   var chartdata2=[trace2];
 
   var layout2={
-      title:"alcohol",
-  
+      title:"Total Alcohol Consumption",
+      yaxis:{
+        automargin:true,
+      }
   }
 
   Plotly.newPlot("bar",chartdata,layout);
@@ -1594,15 +1630,19 @@ else {
   var chartdata=[trace1];
 
   var layout={
-      title:"hapiness score",
-  
+      title:"Hapiness Score",
+      yaxis:{
+        automargin:true,
+      }
   }
 
   var chartdata2=[trace2];
 
   var layout2={
-      title:"alcohol",
-  
+      title:"Total Alcohol Consumption",
+      yaxis:{
+        automargin:true,
+      }
   }
 
   Plotly.newPlot("bar",chartdata,layout);
@@ -1646,13 +1686,13 @@ var data = [
 	{
 		domain: { x: [0, 1], y: [0, 1] },
 		value: level,
-		title: { text: "Score" },
+		title: { text: "Hapiness Score" },
 		type: "indicator",
 		mode: "gauge+number"
 	}
 ];
 
-var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+var layout = { width: 400, height: 300, margin: { t: 0, b: 0 } };
 Plotly.newPlot('gauge', data, layout);
 
 
