@@ -1,4 +1,5 @@
-function line_coordinates(x,y){ //x for data in x-axis, y for data in y-axis
+//create function used to calculate linear line properties
+function line_coordinates(x,y){ 
 
       var lr = {};
       var n = y.length;
@@ -240,6 +241,7 @@ d3.csv("data/data.csv").then(function(csvData, err) {
 
   var line_coord = line_coordinates(xdata,ydata);
 
+  // append initial line
   var linesGroup = chartGroup.selectAll("line")
     .data(csvData)
     .enter()
@@ -297,13 +299,7 @@ d3.csv("data/data.csv").then(function(csvData, err) {
   .attr("value", "HappinessScore") 
   .classed("active", true)
   .text("Happiness Score");
-   
-//  var hdiLabel = ylabelsGroup.append("text")
-//  .attr("transform",`translate(-80,${height / 2})rotate(-90)`)
-//  .attr("dy", "1em")
-//  .attr("value", "HDI") 
-//  .classed("inactive", true)
-//  .text("HDI"); 
+
 
 // use updateToolTip function above with imported data
 var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
@@ -326,7 +322,8 @@ labelsGroup.selectAll("text")
 
     // updates circles with new x values
     circlesGroup = renderCircles(circlesGroup, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis);
-
+    
+    // updates circles with new x values
     linesGroup = renderLine(linesGroup, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis);
 
     // updates text with new x values
@@ -391,7 +388,8 @@ ylabelsGroup.selectAll("text")
 
     // updates circles with new y values
     circlesGroup = renderCircles(circlesGroup, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis);
-
+    
+    // updates circles with new y values
     linesGroup = renderLine(linesGroup, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis);
 
     // updates text with new y values
@@ -405,17 +403,11 @@ ylabelsGroup.selectAll("text")
         scoreLabel
           .classed("active", true)
           .classed("inactive", false);
-//        hdiLabel
-//          .classed("active", false)
-//          .classed("inactive", true);
       }
       else {
       scoreLabel
         .classed("active", false)
         .classed("inactive", true);
-//      hdiLabel
-//        .classed("active", true)
-//        .classed("inactive", false);
     }
   }
 })
@@ -426,8 +418,6 @@ ylabelsGroup.selectAll("text")
 makeResponsive();
 
 d3.select(window).on("resize",makeResponsive);
-
-
 
 
 var svgWidth = window.innerWidth*0.7;
@@ -538,17 +528,9 @@ d3.csv("AlcoholAbuse.csv").then(function(AlcoholAbuse) {
 });
 
 
-
-
-
-
-
-
-//country=[];
 function metadatainfo(id){
   d3.csv("data/data.csv").then((input) =>{
-//      var metadata=metainput.metadata;
-//      country=[];
+      //create empty arrays to store information
       Western_Europe_h=[];
       North_America_h=[];
       Australia_and_New_Zealand_h=[];
@@ -595,10 +577,9 @@ function metadatainfo(id){
       Sub_Saharan_Africa_S=[];
       Sub_Saharan_Africa_W=[];
 
-//      dict={};
-//      var list=[{key:"key",value:"value"}]
       for (var i=0;i<input.length;i++){
 
+        //parse data
         input[i].HappinessScore = + input[i].HappinessScore;
         input[i].Beer_PerCapita = + input[i].Beer_PerCapita;
         input[i].Spirit_PerCapita = + input[i].Spirit_PerCapita;
@@ -658,16 +639,9 @@ function metadatainfo(id){
           Sub_Saharan_Africa_S.push(input[i].Spirit_PerCapita);
           Sub_Saharan_Africa_W.push(input[i].Wine_PerCapita);
         }
-//      dict["Country"]=input[i].Country;
-//      dict["HapinessScore"]=input[i].HappinessScore;
-//      dict={};
-//        list[i].key=input[i].key;
-//      country.push(input[i].Country)
-//      country.push(input[i].HappinessScore);
-//      dict["Country"]=input[i].Country;
       }  
-//      console.log(country);
 
+//create sum and average of values in an array
 h1=Western_Europe_h.reduce(function(a,b){
   return a+b;
 },0);
@@ -814,18 +788,15 @@ al9=h91+h92+h93;
 al9f=al9/Sub_Saharan_Africa_B.length;
 
 worldh=(h1+h2+h3+h4+h5+h6+h7+h8+h9)/input.length;
-//console.log(input.length);
 worldal=(al1+al2+al3+al4+al5+al6+al7+al8+al9)/input.length;
 
 region2=["World", "Australia_and_New_Zealand", "North_America", "Western_Europe", "Latin_America_and_Caribbean", "Southeastern_Asia", "Eastern_Asia", "Middle_East_and_Northern_Africa", "Central_and_Eastern_Europe", "Sub_Saharan_Africa"];
 
+      //when a region is chosen, display the corresponding information
       var info=region2.filter(input => input===id);
-    
-      
       var demographicinfo=d3.select("#sample-metadata");
       demographicinfo.html("");
       Object.entries(info).forEach(([key,value]) =>{
-//        console.log(key,value);
         if (id=="World"){
           demographicinfo.append("h7").text(value);
           demographicinfo.append("h7").text(" Average Happiness Score: "+worldh.toFixed(2));
@@ -900,6 +871,7 @@ region2=["World", "Australia_and_New_Zealand", "North_America", "Western_Europe"
   )
 }
 
+//create initial display
 function init(){
   var button=d3.select("#selDataset");
   d3.csv("data/data.csv").then((data) =>{
@@ -919,6 +891,7 @@ function init(){
   )
 }
 
+//when a choice is made, display the corresponding information
 function optionChanged(id){
   metadatainfo(id);
   draw(id);
@@ -927,16 +900,11 @@ function optionChanged(id){
 //initiate the plots
 init();
 
-
+//function to draw graphs
 function draw(id){
 d3.csv("data/data.csv").then((importdata) =>{
         
-
   var data=importdata;
-//  var filter=data.samples.filter(input => input.id.toString()===id)[0];
-//  var filter2=data.metadata.filter(input => input.id.toString()===id)[0];
-  
-//  var samplevalue=filter.sample_values.slice(0,10).reverse();
  
 country=[];
 hapiness=[];
@@ -945,7 +913,6 @@ Western_Europe_Beer=[];
 Western_Europe_Spirit=[];
 Western_Europe_Wine=[];
 Western_Europe_name=[];
-//Western_Europe_al=[];
 
 North_America=[];
 North_America_Beer=[];
@@ -1010,7 +977,7 @@ if(importdata[i].Region=="Western Europe"){
   Western_Europe_Spirit.push(importdata[i].Spirit_PerCapita)
   Western_Europe_Wine.push(importdata[i].Wine_PerCapita)
   Western_Europe_name.push(importdata[i].Country)
-//  Western_Europe_al.push(importdata[i].Beer_PerCapita);
+
 }
 else if(importdata[i].Region=="North America"){
   North_America.push(importdata[i].HappinessScore)
@@ -1215,16 +1182,12 @@ average8=sum8/Eastern_Asia.length;
 average9=sum9/Sub_Saharan_Africa.length;
 average=[average3, average2, average1, average5, average6, average8, average4, average7, average9];
 al=[alsum3, alsum2, alsum1, alsum5, alsum6, alsum8, alsum4, alsum1, alsum9]
-//averagef=average.sort(function(a,b){return b-a});
-//console.log(Western_Europe_Beer);
-//  var otuids=filter.otu_ids.slice(0,10);
-//  newotuids=otuids.map(ids =>"OTU" +ids)
-//  var label=filter.otu_labels.slice(0,10);
 
+//get total alcohol consumption
 Western_Europe_alcohol=Western_Europe_Beer.map(function(v,i){
   return v+Western_Europe_Spirit[i]+Western_Europe_Wine[i];
 });
-//console.log(alcohol);
+
 
 North_America_alcohol=North_America_Beer.map(function(v,i){
   return v+North_America_Spirit[i]+North_America_Wine[i];
@@ -1263,7 +1226,6 @@ if(id==="World"){
   var trace1={
       x:average,
       y:region,
-//      text: label,
       type:"bar",
       orientation:"h"
   };
@@ -1271,7 +1233,6 @@ if(id==="World"){
   var trace2={
     x:al,
     y:region,
-//      text: label,
     type:"bar",
     orientation:"h"
 };
@@ -1302,7 +1263,6 @@ else if(id==="Western_Europe"){
   var trace1={
       x:Western_Europe,
       y:Western_Europe_name,
-//      text: label,
       type:"bar",
       orientation:"h"
   };
@@ -1310,7 +1270,6 @@ else if(id==="Western_Europe"){
   var trace2={
     x:Western_Europe_alcohol,
     y:Western_Europe_name,
-//      text: label,
     type:"bar",
     orientation:"h"
 };
@@ -1341,7 +1300,6 @@ else if(id==="North_America"){
   var trace1={
       x:North_America,
       y:North_America_name,
-//      text: label,
       type:"bar",
       orientation:"h"
   };
@@ -1349,7 +1307,6 @@ else if(id==="North_America"){
   var trace2={
     x:North_America_alcohol,
     y:North_America_name,
-//      text: label,
     type:"bar",
     orientation:"h"
 };
@@ -1380,7 +1337,6 @@ else if(id==="Australia_and_New_Zealand"){
   var trace1={
       x:Australia_and_New_Zealand,
       y:Australia_and_New_Zealand_name,
-//      text: label,
       type:"bar",
       orientation:"h"
   };
@@ -1388,7 +1344,6 @@ else if(id==="Australia_and_New_Zealand"){
   var trace2={
     x:Australia_and_New_Zealand_alcohol,
     y:Australia_and_New_Zealand_name,
-//      text: label,
     type:"bar",
     orientation:"h"
 };
@@ -1419,7 +1374,6 @@ else if(id==="Middle_East_and_Northern_Africa"){
   var trace1={
       x:Middle_East_and_Northern_Africa,
       y:Middle_East_and_Northern_Africa_name,
-//      text: label,
       type:"bar",
       orientation:"h"
   };
@@ -1427,7 +1381,6 @@ else if(id==="Middle_East_and_Northern_Africa"){
   var trace2={
     x:Middle_East_and_Northern_Africa_alcohol,
     y:Middle_East_and_Northern_Africa_name,
-//      text: label,
     type:"bar",
     orientation:"h"
 };
@@ -1458,7 +1411,6 @@ else if(id==="Latin_America_and_Caribbean"){
   var trace1={
       x:Latin_America_and_Caribbean,
       y:Latin_America_and_Caribbean_name,
-//      text: label,
       type:"bar",
       orientation:"h"
   };
@@ -1466,7 +1418,6 @@ else if(id==="Latin_America_and_Caribbean"){
   var trace2={
     x:Latin_America_and_Caribbean_alcohol,
     y:Latin_America_and_Caribbean_name,
-//      text: label,
     type:"bar",
     orientation:"h"
 };
@@ -1497,7 +1448,6 @@ else if(id==="Southeastern_Asia"){
   var trace1={
       x:Southeastern_Asia,
       y:Southeastern_Asia_name,
-//      text: label,
       type:"bar",
       orientation:"h"
   };
@@ -1505,7 +1455,6 @@ else if(id==="Southeastern_Asia"){
   var trace2={
     x:Southeastern_Asia_alcohol,
     y:Southeastern_Asia_name,
-//      text: label,
     type:"bar",
     orientation:"h"
 };
@@ -1536,7 +1485,6 @@ else if(id==="Central_and_Eastern_Europe"){
   var trace1={
       x:Central_and_Eastern_Europe,
       y:Central_and_Eastern_Europe_name,
-//      text: label,
       type:"bar",
       orientation:"h"
   };
@@ -1544,7 +1492,6 @@ else if(id==="Central_and_Eastern_Europe"){
   var trace2={
     x:Central_and_Eastern_Europe_alcohol,
     y:Central_and_Eastern_Europe_name,
-//      text: label,
     type:"bar",
     orientation:"h"
 };
@@ -1575,7 +1522,6 @@ else if(id==="Eastern_Asia"){
   var trace1={
       x:Eastern_Asia,
       y:Eastern_Asia_name,
-//      text: label,
       type:"bar",
       orientation:"h"
   };
@@ -1583,7 +1529,6 @@ else if(id==="Eastern_Asia"){
   var trace2={
     x:Eastern_Asia_alcohol,
     y:Eastern_Asia_name,
-//      text: label,
     type:"bar",
     orientation:"h"
 };
@@ -1614,7 +1559,6 @@ else {
   var trace1={
       x:Sub_Saharan_Africa,
       y:Sub_Saharan_Africa_name,
-//      text: label,
       type:"bar",
       orientation:"h"
   };
@@ -1622,7 +1566,6 @@ else {
   var trace2={
     x:Sub_Saharan_Africa_alcohol,
     y:Sub_Saharan_Africa_name,
-//      text: label,
     type:"bar",
     orientation:"h"
 };
@@ -1650,6 +1593,7 @@ else {
 }
 
 
+//calculate gauge chart information
 if(id=="World"){
   var level = (sum1+sum2+sum3+sum4+sum5+sum6+sum7+sum8+sum9)/importdata.length;
   }
@@ -1694,9 +1638,5 @@ var data = [
 
 var layout = { width: 400, height: 300, margin: { t: 0, b: 0 } };
 Plotly.newPlot('gauge', data, layout);
-
-
-
-
 })
 }
