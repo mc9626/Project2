@@ -528,6 +528,110 @@ d3.csv("AlcoholAbuse.csv").then(function(AlcoholAbuse) {
 });
 
 
+var myMap = L.map("map", {
+  center: [0,0],
+  zoom: 2
+});
+
+var streetmap=L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+  maxZoom: 18,
+  id: 'mapbox/streets-v11',
+  tileSize: 512,
+  zoomOffset: -1,
+  accessToken: "pk.eyJ1IjoiYnZlcmExOTg4IiwiYSI6ImNrYXRyZTJ2NDB5NmEycm1tbnMzdmtmdWQifQ.Hg2bXaknFRAx1vDkMWU9YQ"
+  }).addTo(myMap);
+
+
+  var lightmap = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/light-v10', 
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: "pk.eyJ1IjoiYnZlcmExOTg4IiwiYSI6ImNrYXRyZTJ2NDB5NmEycm1tbnMzdmtmdWQifQ.Hg2bXaknFRAx1vDkMWU9YQ"
+});
+
+var satellitemap = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/satellite-v9', 
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: "pk.eyJ1IjoiYnZlcmExOTg4IiwiYSI6ImNrYXRyZTJ2NDB5NmEycm1tbnMzdmtmdWQifQ.Hg2bXaknFRAx1vDkMWU9YQ"
+});
+
+
+var baseMaps = {
+  "Satellite": satellitemap,
+  "Grayscale": lightmap,
+  "Outdoors": streetmap,
+};
+
+// Define a overlayMaps object to hold our overy layers
+
+
+L.control.layers(baseMaps,).addTo(myMap);
+
+
+
+
+var link = 'fullDATA.geo.json';
+
+var locations = {
+type: 'FeatureCollection',
+features: []
+}
+
+function style(feature) {
+return {
+  color: "white",
+  fillColor: "blue",
+  fillOpacity: 0.5,
+  weight: 1.5
+};
+}
+
+function onEachFeature(feature, layer) {
+layer.bindPopup("<h3>" + feature.properties.Country +
+  "</h3><hr><p>" + "Total Alcohol Consumption (L): " + feature.properties.Total_Consumption + "</p>"+"<p>"+"Happiness Score: "+ feature.properties.HappinessScore+"</p>"
+  +"<p>"+"Male Consumption Rate: "+ feature.properties.Male +"</p>"+"<p>" +"Female Consumption Rate: "+ feature.properties.Female+"</p>");
+
+}
+
+d3.json(link).then(response => {
+
+//console.log(response);
+
+locations.features = response.features.filter(d => d.geometry.coordinates.length ? true : false)
+  //console.log(locations)
+/* newLocations = locations.map(geo => {
+    for (let i = 0; i < csvData.length; i++)j {
+      if(geo.properties.Country === csvData[i].Country) {
+        geo.properties = 
+      }
+    }
+    })
+  }) */
+  L.geoJson(locations, {
+      style: style,
+      onEachFeature: onEachFeature
+    }).addTo(myMap);
+
+  createBarPlot(locations.features)
+
+}).catch(error => console.error(error));
+
+function createBarPlot(features) {
+console.log(`called createBar: ${features.length}`)
+}
+
+
+
+
+
+
+
 function metadatainfo(id){
   d3.csv("data/data.csv").then((input) =>{
       //create empty arrays to store information
