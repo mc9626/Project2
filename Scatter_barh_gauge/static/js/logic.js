@@ -247,62 +247,62 @@ var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
 // x axis labels event listener
 labelsGroup.selectAll("text")
-.on("click", function() {
+  .on("click", function() {
     // get value of selection
-  var value = d3.select(this).attr("value");
-  if (value !== chosenXAxis) {
+    var value = d3.select(this).attr("value");
+    if (value !== chosenXAxis) {
 
-    // replaces chosenXAxis with value
-    chosenXAxis = value;
+      // replaces chosenXAxis with value
+      chosenXAxis = value;
 
-    // functions here found above csv import updates x scale for new data
-    xLinearScale = xScale(csvData, chosenXAxis);
-    yLinearScale = yScale(csvData, chosenYAxis);
-    // updates x axis with transition
-    xAxis = renderXAxes(xLinearScale, xAxis);
+      // functions here found above csv import updates x scale for new data
+      xLinearScale = xScale(csvData, chosenXAxis);
+      yLinearScale = yScale(csvData, chosenYAxis);
+      // updates x axis with transition
+      xAxis = renderXAxes(xLinearScale, xAxis);
 
-    // updates circles with new x values
-    circlesGroup = renderCircles(circlesGroup, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis);
-    
-    // updates text with new x values
-    textGroup = renderText(textGroup, xLinearScale,yLinearScale,chosenXAxis,chosenYAxis);
+      // updates circles with new x values
+      circlesGroup = renderCircles(circlesGroup, xLinearScale, yLinearScale, chosenXAxis, chosenYAxis);
+      
+      // updates text with new x values
+      textGroup = renderText(textGroup, xLinearScale,yLinearScale,chosenXAxis,chosenYAxis);
 
-    // updates tooltips with new info
-    circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
+      // updates tooltips with new info
+      circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
-    // changes classes to change bold text
-    if (chosenXAxis === "Beer_PerCapita") {
-      beerLabel
-        .classed("active", true)
-        .classed("inactive", false);
-      spiritLabel
-        .classed("active", false)
-        .classed("inactive", true);
-      wineLabel
-        .classed("active", false)
-        .classed("inactive", true);
-      }
-    else if (chosenXAxis === "Spirit_PerCapita") {
-      beerLabel
-        .classed("active", false)
-        .classed("inactive", true);
-      spiritLabel
-        .classed("active", true)
-        .classed("inactive", false);
-      wineLabel
-        .classed("active", false)
-        .classed("inactive", true);
-      }
-    else {
-      beerLabel
-        .classed("active", false)
-        .classed("inactive", true);
-      spiritLabel
-        .classed("active", false)
-        .classed("inactive", true);
-      wineLabel
-        .classed("active", true)
-        .classed("inactive", false);
+      // changes classes to change bold text
+      if (chosenXAxis === "Beer_PerCapita") {
+        beerLabel
+          .classed("active", true)
+          .classed("inactive", false);
+        spiritLabel
+          .classed("active", false)
+          .classed("inactive", true);
+        wineLabel
+          .classed("active", false)
+          .classed("inactive", true);
+        }
+      else if (chosenXAxis === "Spirit_PerCapita") {
+        beerLabel
+          .classed("active", false)
+          .classed("inactive", true);
+        spiritLabel
+          .classed("active", true)
+          .classed("inactive", false);
+        wineLabel
+          .classed("active", false)
+          .classed("inactive", true);
+        }
+      else {
+        beerLabel
+          .classed("active", false)
+          .classed("inactive", true);
+        spiritLabel
+          .classed("active", false)
+          .classed("inactive", true);
+        wineLabel
+          .classed("active", true)
+          .classed("inactive", false);
     }
   }
 
